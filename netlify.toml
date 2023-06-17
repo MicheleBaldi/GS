@@ -1,5 +1,5 @@
 [build]
-  publish = "dist/GsApp"
+  publish = "dist/gs-app"
   command = "ng build"
   functions = "./netlify/functions"
 [[redirects]]
