@@ -1,0 +1,9 @@
+<div class="container">
+    <h2>Angular material list example</h2>
+    <mat-list>
+      <mat-list-item *ngFor="let uscita of uscite.uscite">
+          <div matLine>{{ uscita.fields.Titolo }}</div>
+           <div matLine>Data: {{ uscita.fields.Data }}</div>
+      </mat-list-item>
+    </mat-list>
+  </div>
