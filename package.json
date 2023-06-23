@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start-pwa": "ng build && http-server -p 8080 -c-1 dist/gs-app",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -27,6 +28,7 @@
     "@popperjs/core": "^2.11.6",
     "airtable": "^0.12.1",
     "bootstrap": "^5.2.3",
+    "http-server": "^14.1.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
