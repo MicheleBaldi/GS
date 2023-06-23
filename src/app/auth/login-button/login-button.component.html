@@ -1,1 +1,5 @@
-<button mat-raised-button (click)="auth.loginWithRedirect()"  *ngIf="!(auth.isAuthenticated$ | async)">Log in</button>
+<div class="row justify-content-center align-items-center m-auto">
+    <div class="col-12 col-md-3 align-self-center">
+        <button type="button" class="btn btn-primary btn-lg w-100 btn-block" (click)="auth.loginWithRedirect()"  *ngIf="!(auth.isAuthenticated$ | async)">Log in</button>
+    </div>
+</div>

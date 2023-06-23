@@ -18,6 +18,10 @@ export class HomeComponent {
        {
         this.router.navigate(['/login']);
        }
+       else 
+       {
+        this.dataService.updateUserData();
+       }
       },
       error: (msg) => {
         console.log('error')

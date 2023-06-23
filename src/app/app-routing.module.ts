@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListaUsciteComponent } from './lista-uscite/lista-uscite.component';
 import { LoginButtonComponent } from './auth/login-button/login-button.component';
 import { HomeComponent } from './home/home.component';
+import { ListaUsciteIscrittoComponent } from './lista-uscite-iscritto/lista-uscite-iscritto.component';
 
 const routes: Routes = [
 	{
@@ -16,6 +17,10 @@ const routes: Routes = [
     {
 		path: 'lista-uscite',
 		component: ListaUsciteComponent
+	},
+	{
+		path: 'lista-uscite-iscritto',
+		component: ListaUsciteIscrittoComponent
 	}
 ];
 

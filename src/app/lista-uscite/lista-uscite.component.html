@@ -17,7 +17,6 @@
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
           <button mat-button *ngIf="!element.fields.Partecipanti.includes(this.dataService.currentUser.personaid)" (click)="onActionButtonClick($event, element)">Iscriviti</button>
-          <span *ngIf="element.fields.Partecipanti.includes(this.dataService.currentUser.personaid)">Iscritto</span>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
