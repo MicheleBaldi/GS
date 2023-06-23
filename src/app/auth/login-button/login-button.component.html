@@ -1,3 +1,1 @@
-<button (click)="auth.loginWithRedirect()"  *ngIf="!auth.isAuthenticated$">Log in</button>
-<app-logout-button></app-logout-button>
-<a href="/lista-uscite">Lista uscite</a>
+<button mat-raised-button (click)="auth.loginWithRedirect()"  *ngIf="!(auth.isAuthenticated$ | async)">Log in</button>

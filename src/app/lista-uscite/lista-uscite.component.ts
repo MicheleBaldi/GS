@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IUscita } from '../model/uscita.model';
 import { HttpClient } from '@angular/common/http';
 import { AuthService, User } from '@auth0/auth0-angular';
+import { DataService } from '../service/data.service';
 
 
 @Component({
@@ -11,14 +12,12 @@ import { AuthService, User } from '@auth0/auth0-angular';
 })
 export class ListaUsciteComponent {
   uscite: any;
-  currentUser: any;
   public displayedColumns = ['titolo', 'data','luogo','actions'];
-  constructor(private http: HttpClient,public auth: AuthService) { }
+  constructor(private http: HttpClient,public auth: AuthService, public dataService: DataService) { }
 
   ngOnInit(): void {
     if(this.auth.isAuthenticated$)
     {
-      this.auth.user$.subscribe(data => this.currentUser = data);
       const baseUrl = window.location.origin;
       this.http
         .get(`${baseUrl}/.netlify/functions/uscite`)
@@ -36,7 +35,7 @@ export class ListaUsciteComponent {
   { 
     const baseUrl = window.location.origin;
     this.http
-      .post(`${baseUrl}/.netlify/functions/iscrizioneuscita`, {'persona':this.currentUser.personaid, 'uscita':eventData.id})
+      .post(`${baseUrl}/.netlify/functions/iscrizioneuscita`, {'persona':this.dataService.currentUser.personaid, 'uscita':eventData.id})
       .subscribe({
         next: (res: any) => {
           alert(res.message);

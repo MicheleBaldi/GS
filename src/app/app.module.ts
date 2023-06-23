@@ -8,12 +8,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgMaterialModule } from './ng-material/ng-material.module'
-import { MatTableModule } from '@angular/material/table'  
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment as env } from '../environments/environment';
 import { LoginButtonComponent } from './auth/login-button/login-button.component';
 import { LogoutButtonComponent } from './auth/logout-button/logout-button.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { ListaUsciteIscrittoComponent } from './lista-uscite-iscritto/lista-uscite-iscritto.component';
+import { HomeComponent } from './home/home.component';
+import { DataService } from './service/data.service';
+
 
 
 @NgModule({
@@ -21,11 +24,17 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AppComponent,
     ListaUsciteComponent,
     LoginButtonComponent,
-    LogoutButtonComponent
+    LogoutButtonComponent,
+    ListaUsciteIscrittoComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule, HttpClientModule, ReactiveFormsModule, BrowserAnimationsModule,NgMaterialModule,MatTableModule,
+    AppRoutingModule,
+    HttpClientModule, 
+    ReactiveFormsModule, 
+    BrowserAnimationsModule,
+    NgMaterialModule,
     AuthModule.forRoot({
       ...env.auth0,
     }),
@@ -37,7 +46,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     }),
 
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
