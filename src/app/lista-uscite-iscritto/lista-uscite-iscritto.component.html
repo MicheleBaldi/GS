@@ -1,1 +1,14 @@
-<p>lista-uscite-iscritto works!</p>
+
+<h2>Uscite a cui sei iscritto</h2>
+<table mat-table *ngIf="this.uscite" [dataSource]="this.usciteiscitto">
+  <ng-container matColumnDef="titolo">
+    <th mat-header-cell *matHeaderCellDef>Nome</th>
+    <td mat-cell *matCellDef="let element"> {{element.fields.Titolo}} </td>
+  </ng-container>
+  <ng-container matColumnDef="luogo">
+    <th mat-header-cell *matHeaderCellDef>Luogo</th>
+    <td mat-cell *matCellDef="let element"> {{element.fields.Luogo}} </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

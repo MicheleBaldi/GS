@@ -13,17 +13,14 @@ import { Router } from '@angular/router';
 export class ListaUsciteIscrittoComponent {
   uscite: any;
   usciteiscitto: any;
+  public displayedColumns = ['titolo','luogo'];
+
 
   constructor(private http: HttpClient,public auth: AuthService, public dataService: DataService,private router:Router) { }
 
   ngOnInit(): void {
-    debugger;
     if(this.auth.isAuthenticated$)
     {
-      if(this.dataService.currentUser === undefined)
-      {
-        this.router.navigate(['/']);
-      }
       const baseUrl = window.location.origin;
       this.http
         .get(`${baseUrl}/.netlify/functions/uscite`)

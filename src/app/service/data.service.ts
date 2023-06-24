@@ -8,13 +8,4 @@ export class DataService {
   isAuthenticate: boolean = false;
 
   constructor(public auth: AuthService) { }
-  
-  updateUserData(){
-    this.auth.user$.subscribe(data => this.currentUser = data);
-  }
-
-  isAuth(){
-    
-  }
-
 }

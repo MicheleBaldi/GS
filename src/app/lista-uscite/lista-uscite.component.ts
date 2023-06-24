@@ -12,7 +12,7 @@ import { DataService } from '../service/data.service';
 })
 export class ListaUsciteComponent {
   uscite: any;
-  public displayedColumns = ['titolo', 'data','luogo','actions'];
+  public displayedColumns = ['titolo','luogo','actions'];
   constructor(private http: HttpClient,public auth: AuthService, public dataService: DataService) { }
 
   ngOnInit(): void {

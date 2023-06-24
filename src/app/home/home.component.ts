@@ -12,15 +12,12 @@ export class HomeComponent {
   constructor(public auth: AuthService, private router:Router, private dataService:DataService) { }
 
   ngOnInit(): void {
+    //debugger;
     this.auth.isAuthenticated$.subscribe({
       next: (isAuthenticated) => {
        if(!isAuthenticated)
        {
         this.router.navigate(['/login']);
-       }
-       else 
-       {
-        this.dataService.updateUserData();
        }
       },
       error: (msg) => {
