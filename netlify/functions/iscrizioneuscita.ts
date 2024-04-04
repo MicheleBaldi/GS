@@ -22,7 +22,7 @@ const handler: Handler = async (event: HandlerEvent, context: any) => {
 		return {
 			statusCode: 200,
 			body: JSON.stringify({
-				message: 'OK!'
+				message: 'Iscrizione riuscita'
 			})
 		};
 		
