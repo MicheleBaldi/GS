@@ -17,6 +17,8 @@ import { ListaUsciteIscrittoComponent } from './lista-uscite-iscritto/lista-usci
 import { HomeComponent } from './home/home.component';
 import { DataService } from './service/data.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SelezionaPersonaComponent } from './seleziona-persona/seleziona-persona.component';
+import {MatSelectModule} from '@angular/material/select';
 
 
 
@@ -27,7 +29,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     LoginButtonComponent,
     LogoutButtonComponent,
     ListaUsciteIscrittoComponent,
-    HomeComponent
+    HomeComponent,
+    SelezionaPersonaComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule, 
     BrowserAnimationsModule,
     NgMaterialModule,
+    MatSelectModule,
     AuthModule.forRoot({
       ...env.auth0,
     }),

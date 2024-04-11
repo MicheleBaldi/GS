@@ -39,7 +39,9 @@ export class AppComponent {
               this.user = data;
               this.dataService.currentUser = this.user;
               const baseUrl = window.location.origin;
-              this.http
+              if(this.user.personaid != null)
+              {
+                this.http
                 .post(`${baseUrl}/.netlify/functions/persone`, {'personaid':this.user.personaid})
                 .subscribe({
                   next: (res: any) => {
@@ -52,6 +54,11 @@ export class AppComponent {
                     alert('ERROR: ' + err.error);
                   },
                 });
+              }
+              else
+              {
+                this.router.navigate(['/seleziona-persona']);
+              }
             }
           })
          }

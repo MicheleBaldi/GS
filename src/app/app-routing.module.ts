@@ -4,6 +4,7 @@ import { ListaUsciteComponent } from './lista-uscite/lista-uscite.component';
 import { LoginButtonComponent } from './auth/login-button/login-button.component';
 import { HomeComponent } from './home/home.component';
 import { ListaUsciteIscrittoComponent } from './lista-uscite-iscritto/lista-uscite-iscritto.component';
+import { SelezionaPersonaComponent } from './seleziona-persona/seleziona-persona.component';
 
 const routes: Routes = [
 	{
@@ -21,7 +22,12 @@ const routes: Routes = [
 	{
 		path: 'lista-uscite-iscritto',
 		component: ListaUsciteIscrittoComponent
+	},
+	{
+		path: 'seleziona-persona',
+		component: SelezionaPersonaComponent
 	}
+
 ];
 
 @NgModule({

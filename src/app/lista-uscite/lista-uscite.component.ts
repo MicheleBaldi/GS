@@ -38,6 +38,9 @@ export class ListaUsciteComponent {
       .post(`${baseUrl}/.netlify/functions/iscrizioneuscita`, {'persona':this.dataService.currentUser.personaid, 'uscita':eventData.id})
       .subscribe({
         next: (res: any) => {
+          let uscitaid = eventData.id;
+          let uscita = this.uscite.uscite.filter(x=>x.id == uscitaid)
+          uscita[0].fields.Partecipanti.push(this.dataService.currentUser.personaid);
           alert(res.message);
         },
         error: (err) => {
