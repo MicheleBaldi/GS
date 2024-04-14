@@ -17,7 +17,7 @@ export class AppComponent {
   sidenav!: MatSidenav;
   persona:any;
   user:any;
-  imgProfile:string="/assets/gs.jpg";
+  imgProfile:string="/assets/gs.png";
 
   constructor(private observer: BreakpointObserver,
     private http: HttpClient,
