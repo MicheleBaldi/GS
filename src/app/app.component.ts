@@ -63,7 +63,10 @@ export class AppComponent {
                     this.persona = res;
                     this.dataService.isAuthenticate = true;
                     if(this.persona.persona.fields['Foto Profilo'].length > 0)
-                      this.imgProfile= this.persona.persona.fields['Foto Profilo'][0].url;
+                      {
+                        this.imgProfile= this.persona.persona.fields['Foto Profilo'][0].url;
+                      }
+                     this.subscribeToNotifications();
                   },
                   error: (err) => {
                     alert('ERROR: ' + err.error);
