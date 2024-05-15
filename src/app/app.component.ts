@@ -32,11 +32,23 @@ export class AppComponent {
     private swPush: SwPush) {}
 
     subscribeToNotifications() {
-
+debugger;
       this.swPush.requestSubscription({
           serverPublicKey: this.VAPID_PUBLIC_KEY
       })
-      .then(sub => console.log(sub))
+      .then(
+        sub => 
+        this.http
+      .post(`${window.location.origin}/.netlify/functions/subnotification`, {'personaid':this.dataService.currentUser.personaid, 'sub':JSON.stringify(sub)})
+      .subscribe({
+        next: (res: any) => {
+          alert(res.message);
+        },
+        error: (err) => {
+          alert('ERROR: ' + err.error);
+        },
+      })
+      )
       .catch(err => console.error("Could not subscribe to notifications", err));
   }
 
