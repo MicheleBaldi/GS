@@ -33,6 +33,7 @@ export class ListaUsciteComponent {
   }
   onActionButtonClick(event: Event, eventData: any)
   { 
+    (event.target as HTMLButtonElement).disabled = true;
     const baseUrl = window.location.origin;
     this.http
       .post(`${baseUrl}/.netlify/functions/iscrizioneuscita`, {'persona':this.dataService.currentUser.personaid, 'uscita':eventData.id})
@@ -42,9 +43,11 @@ export class ListaUsciteComponent {
           let uscita = this.uscite.uscite.filter(x=>x.id == uscitaid)
           uscita[0].fields.Partecipanti.push(this.dataService.currentUser.personaid);
           alert(res.message);
+          (event.target as HTMLButtonElement).disabled = false;
         },
         error: (err) => {
           alert('ERROR: ' + err.error);
+          (event.target as HTMLButtonElement).disabled = false;
         },
       });
   }
