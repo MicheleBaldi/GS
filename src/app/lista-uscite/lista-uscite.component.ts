@@ -40,7 +40,7 @@ export class ListaUsciteComponent {
   ngOnInit(): void {
     if(this.auth.isAuthenticated$)
     {
-      this.saggiPersona="";
+      this.saggiPersona=[];
       const baseUrl = window.location.origin;
       this.http
         .get(`${baseUrl}/.netlify/functions/uscite`)
@@ -149,7 +149,7 @@ export class ListaUsciteComponent {
   }
 
   closeModal() {
-    this.saggiPersona="";
+    this.saggiPersona=[];
     this.modalService.dismissAll();
   }
 
