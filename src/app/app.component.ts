@@ -46,6 +46,7 @@ export class AppComponent {
                 .subscribe({
                   next: (res: any) => {
                     this.persona = res;
+                    this.dataService.persona = res;
                     this.dataService.isAuthenticate = true;
                     if(this.persona.persona.fields['Foto Profilo'].length > 0)
                       this.imgProfile= this.persona.persona.fields['Foto Profilo'][0].url;

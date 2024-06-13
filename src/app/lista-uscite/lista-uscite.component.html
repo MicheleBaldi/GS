@@ -3,7 +3,7 @@
     <table mat-table *ngIf="this.uscite" [dataSource]="this.uscite.uscite">
       <ng-container matColumnDef="titolo">
         <th mat-header-cell *matHeaderCellDef>Nome</th>
-        <td mat-cell *matCellDef="let element"> {{element.fields.Titolo}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.fields.Titolo}}</td>
       </ng-container>
       <ng-container matColumnDef="luogo">
         <th mat-header-cell *matHeaderCellDef>Luogo</th>
@@ -14,9 +14,21 @@
         <td mat-cell *matCellDef="let element">
           <button type="button" class="btn btn-primary" *ngIf="element.fields.Partecipanti == null || (element.fields.Partecipanti != null && !element.fields.Partecipanti.includes(this.dataService.currentUser.personaid))" (click)="onActionButtonClick($event, element)">Iscriviti</button>
           <span *ngIf="(element.fields.Partecipanti != null && element.fields.Partecipanti.includes(this.dataService.currentUser.personaid)) && !(element.fields.Convocati != null && element.fields.Convocati.includes(this.dataService.currentUser.personaid))">Iscritto</span>
-          <button class="btn btn-secondary" *ngIf="element.fields.Convocati != null && element.fields.Convocati.includes(this.dataService.currentUser.personaid)">Convocato</button>
+          <button class="btn btn-secondary" *ngIf="element.fields.Convocati != null && element.fields.Convocati.includes(this.dataService.currentUser.personaid)" (click)="open(content, element)">Convocato<mat-icon aria-hidden="false"  fontIcon="search"></mat-icon></button>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+
+    <ng-template #content>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{this.modalTitle}}</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <p *ngFor="let saggio of saggiPersona">
+          {{saggio.nome}}
+        </p>
+      </div>
+   </ng-template>
