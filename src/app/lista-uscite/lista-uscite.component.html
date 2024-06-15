@@ -1,6 +1,6 @@
 
     <h2>Lista uscite future</h2>
-    <table mat-table *ngIf="this.uscite" [dataSource]="this.uscite.uscite">
+    <table mat-table *ngIf="showUscite" [dataSource]="this.uscite.uscite">
       <ng-container matColumnDef="titolo">
         <th mat-header-cell *matHeaderCellDef>Nome</th>
         <td mat-cell *matCellDef="let element"> {{element.fields.Titolo}}</td>

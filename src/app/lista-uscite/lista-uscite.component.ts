@@ -15,6 +15,7 @@ export class ListaUsciteComponent {
   saggi: any;
   modalTitle:any;
   saggiPersona:any;
+  showUscite=false;
 
   public displayedColumns = ['titolo','luogo','actions'];
   AnagSaggi: Array<any> = [{'id':'recPHrbntIqFS0d8D','nome':'Margherita 1'},
@@ -56,18 +57,26 @@ export class ListaUsciteComponent {
                     next:(r:any)=>{
                       this.saggi = r.saggi.filter(x=> x.fields.Presenti.includes(this.dataService.currentUser.personaid));
                       this.uscite.uscite.forEach(element => {
-                        let saggiUscita = this.saggi.filter(x=> x.fields.Uscita.includes(element.id));
                         element.fields.saggiUscita=[];
-                        if(saggiUscita.length > 0 && saggiUscita[0].fields['Saggi Assegnati'] != null)
+                        if(element.fields['Saggi Pronti'])
                           {
-                            saggiUscita[0].fields['Saggi Assegnati'].forEach(e=>{
-                              element.fields.saggiUscita.push(this.AnagSaggi.filter(x=>x.id == e)[0]);
-                            });
+                            let saggiUscita = this.saggi.filter(x=> x.fields.Uscita.includes(element.id));
+                            if(saggiUscita.length > 0 && saggiUscita[0].fields['Saggi Assegnati'] != null)
+                              {
+                                saggiUscita[0].fields['Saggi Assegnati'].forEach(e=>{
+                                  element.fields.saggiUscita.push(this.AnagSaggi.filter(x=>x.id == e)[0]);
+                                });
+                              }
+                              else
+                              {
+                                element.fields.saggiUscita=[{'id':'','nome':'Nessun saggio assegnato'}];
+                              }
                           }
                           else
                           {
-                            element.fields.saggiUscita=[{'id':'','nome':'Nessun saggio assegnato'}];
+                            element.fields.saggiUscita=[{'id':'','nome':'Saggi non ancora assegnati'}];
                           }
+                          this.showUscite = true;
                       });
                     },
                     error: (err) => {
@@ -84,9 +93,11 @@ export class ListaUsciteComponent {
                   next:(r:any)=>{
                     this.saggi = r.ruoliTamburi.filter(x=> x.fields.Presenti.includes(this.dataService.currentUser.personaid));
                     this.uscite.uscite.forEach(element => {
-                      let saggiUscita = this.saggi.filter(x=> x.fields.Uscita.includes(element.id));
                       element.fields.saggiUscita=[];
-                      if(saggiUscita.length > 0 && saggiUscita[0].fields['Ruolo Tamburino Assegnato'] != null)
+                      if(element.fields['Ruoli Pronti'])
+                      {
+                        let saggiUscita = this.saggi.filter(x=> x.fields.Uscita.includes(element.id));
+                        if(saggiUscita.length > 0 && saggiUscita[0].fields['Ruolo Tamburino Assegnato'] != null)
                         {
                           saggiUscita[0].fields['Ruolo Tamburino Assegnato'].forEach(e=>{
                             element.fields.saggiUscita.push(this.AnagRuoli.filter(x=>x.id == e)[0]);
@@ -96,6 +107,12 @@ export class ListaUsciteComponent {
                         {
                           element.fields.saggiUscita=[{'id':'','nome':'Nessun ruolo assegnato'}];
                         }
+                      }
+                      else
+                      {
+                        element.fields.saggiUscita=[{'id':'','nome':'Ruoli non ancora assegnati'}];
+                      }
+                        this.showUscite = true;
                     });
                   },
                   error: (err) => {
@@ -109,6 +126,7 @@ export class ListaUsciteComponent {
                 this.uscite.uscite.forEach(element => {
                   element.fields.saggiUscita=[{'id':'','nome':'PEPEREPPE'}];
                 });
+                this.showUscite = true;
               }
           },
           error: (err) => {
