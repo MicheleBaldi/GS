@@ -16,6 +16,7 @@ export class ListaUsciteComponent {
   modalTitle:any;
   saggiPersona:any;
   showUscite=false;
+  isChiarina=false;
 
   public displayedColumns = ['titolo','luogo','actions'];
   AnagSaggi: Array<any> = [{'id':'recPHrbntIqFS0d8D','nome':'Margherita 1'},
@@ -127,6 +128,7 @@ export class ListaUsciteComponent {
                   element.fields.saggiUscita=[{'id':'','nome':'PEPEREPPE'}];
                 });
                 this.showUscite = true;
+                this.isChiarina = true;
               }
           },
           error: (err) => {
