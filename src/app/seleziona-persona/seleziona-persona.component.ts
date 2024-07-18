@@ -44,7 +44,6 @@ export class SelezionaPersonaComponent {
     }
   
   onSubmit() {
-    debugger
     const baseUrl = window.location.origin;
     this.http
     .post(`${baseUrl}/.netlify/functions/token`,{}).subscribe({

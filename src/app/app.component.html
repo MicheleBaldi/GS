@@ -30,6 +30,10 @@
         <mat-icon>calendar_today</mat-icon>
         <span>Uscite</span>
       </button>
+      <button mat-button class="menu-button" routerLink="/inserisci-presenze" *ngIf="showInsPresenze">
+        <mat-icon>edit</mat-icon>
+        <span>Presenze</span>
+      </button>
       <!-- <button mat-button class="menu-button" routerLink="/lista-uscite-iscritto">
         <mat-icon>event</mat-icon>
         <span>Verfica Iscrizioni</span>

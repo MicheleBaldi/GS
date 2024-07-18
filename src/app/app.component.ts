@@ -18,6 +18,7 @@ export class AppComponent {
   persona:any;
   user:any;
   imgProfile:string="/assets/gs.png";
+  showInsPresenze:any;
 
   constructor(private observer: BreakpointObserver,
     private http: HttpClient,
@@ -38,6 +39,7 @@ export class AppComponent {
             next:(data)=>{
               this.user = data;
               this.dataService.currentUser = this.user;
+              this.showInsPresenze = this.dataService.currentUser.role.length > 0
               const baseUrl = window.location.origin;
               if(this.user.personaid != null)
               {

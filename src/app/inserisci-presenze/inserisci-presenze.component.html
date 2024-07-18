@@ -1,0 +1,35 @@
+<h2>Inserimento Presenze</h2>
+
+<form [formGroup]="formPresenze" autocomplete="off" (ngSubmit)="submit()" style="height: 100%;">
+    <mat-form-field>
+        <mat-label>Scelgi una data</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="data" (dateChange)="valueChanged($event)">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <button type="submit" class="btn btn-primary btn-block" [disabled]="!formPresenze.valid || isDisabled">Salva</button>
+      <div class="d-flex justify-content-center" *ngIf="!showForm">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    <ng-container formArrayName="persone" *ngIf="showForm">
+      <mat-table [dataSource]="persone.controls" style="height: 100%; overflow: auto;">
+  
+        <ng-container matColumnDef="Nome">
+          <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.get('nome').value}} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let element;" [formGroup]="element">
+            <mat-checkbox formControlName="presente" (change)="showOptions($event,element)"></mat-checkbox>
+          </mat-cell>
+        </ng-container>
+  
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </ng-container>
+  </form>

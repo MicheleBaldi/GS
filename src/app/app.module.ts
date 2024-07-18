@@ -19,6 +19,14 @@ import { DataService } from './service/data.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SelezionaPersonaComponent } from './seleziona-persona/seleziona-persona.component';
 import {MatSelectModule} from '@angular/material/select';
+import { InserisciPresenzeComponent } from './inserisci-presenze/inserisci-presenze.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatDatepickerModule,} from '@angular/material/datepicker';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+
+
 
 
 
@@ -30,7 +38,8 @@ import {MatSelectModule} from '@angular/material/select';
     LogoutButtonComponent,
     ListaUsciteIscrittoComponent,
     HomeComponent,
-    SelezionaPersonaComponent
+    SelezionaPersonaComponent,
+    InserisciPresenzeComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +49,12 @@ import {MatSelectModule} from '@angular/material/select';
     BrowserAnimationsModule,
     NgMaterialModule,
     MatSelectModule,
+    MatFormFieldModule, // it's redundant here since MatInputModule already exports it
+    MatCheckboxModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule ,
     AuthModule.forRoot({
       ...env.auth0,
     }),
@@ -52,7 +67,7 @@ import {MatSelectModule} from '@angular/material/select';
     NgbModule,
 
   ],
-  providers: [DataService],
+  providers: [DataService,MatDatepickerModule, MatNativeDateModule,{provide: MAT_DATE_LOCALE, useValue: 'it-IT'}  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
