@@ -1,6 +1,6 @@
 <h2>Inserimento Presenze</h2>
 
-<form [formGroup]="formPresenze" autocomplete="off" (ngSubmit)="submit()" style="height: 100%;">
+<form [formGroup]="formPresenze" autocomplete="off" (ngSubmit)="submit()" style="height: calc(100vh - 180px);">
     <mat-form-field>
         <mat-label>Scelgi una data</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="data" (dateChange)="valueChanged($event)">
@@ -14,7 +14,7 @@
         </div>
       </div>
     <ng-container formArrayName="persone" *ngIf="showForm">
-      <mat-table [dataSource]="persone.controls" style="height: 100%; overflow: auto;">
+      <mat-table [dataSource]="persone.controls" style="height: calc(100vh - 250px); overflow: auto;">
   
         <ng-container matColumnDef="Nome">
           <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>

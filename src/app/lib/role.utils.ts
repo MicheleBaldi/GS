@@ -2,13 +2,13 @@ export function getSheetNameByRole(role) {
     let sheetName = "Foglio1";
     switch (role) {
       case 'ResponsabileSband':
-        sheetName = "Sbandieratori";
+        sheetName = "Dati Sbandieratori";
         break;
       case 'ResponsabileTamburi':
-        sheetName = "Tamburi";
+        sheetName = "Dati Tamburi";
         break;
       case 'ResponsabileChiarine':
-        sheetName = "Chiarine";
+        sheetName = "Dati Chiarine";
         break;
       default:
         break;
