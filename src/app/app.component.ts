@@ -32,7 +32,6 @@ export class AppComponent {
     private swPush: SwPush) {}
 
     subscribeToNotifications() {
-debugger;
       this.swPush.requestSubscription({
           serverPublicKey: this.VAPID_PUBLIC_KEY
       })

@@ -10,11 +10,10 @@ const base = new Airtable({ apiKey: AIRTABLE_KEY }).base('appeK7aRGtPSKdLMp');
 const handler: Handler = async (event: HandlerEvent, context: any) => {
 	try {
         const data = JSON.parse(event.body || '');
-
 		await base('Sub Notification').create([{
 			"fields":{
                 Persona: [data.personaid],
-                Sub: [data.sub]
+                Sub: data.sub
         }
 		}]);
 
