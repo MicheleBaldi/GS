@@ -37,8 +37,7 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
-            "scripts": [],
-            "serviceWorker": true
+            "scripts": []
           },
           "configurations": {
             "production": {

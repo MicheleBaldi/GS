@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { ListaUsciteIscrittoComponent } from './lista-uscite-iscritto/lista-uscite-iscritto.component';
 import { SelezionaPersonaComponent } from './seleziona-persona/seleziona-persona.component';
 import { InserisciPresenzeComponent } from './inserisci-presenze/inserisci-presenze.component';
+import { ListaPresenzeComponent } from './lista-presenze/lista-presenze.component';
 
 const routes: Routes = [
 	{
@@ -31,7 +32,12 @@ const routes: Routes = [
 	{
 		path: 'inserisci-presenze',
 		component: InserisciPresenzeComponent
+	},
+	{
+		path: 'lista-presenze',
+		component: ListaPresenzeComponent
 	}
+
 
 ];
 

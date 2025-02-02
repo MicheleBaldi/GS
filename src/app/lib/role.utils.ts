@@ -16,6 +16,24 @@ export function getSheetNameByRole(role) {
     return sheetName;
   }
 
+  export function getSheetNameAggByRole(role) {
+    let sheetName = "Foglio1";
+    switch (role) {
+      case 'ResponsabileSband':
+        sheetName = "Presenze Sbandieratori";
+        break;
+      case 'ResponsabileTamburi':
+        sheetName = "Presenze Tamburi";
+        break;
+      case 'ResponsabileChiarine':
+        sheetName = "Presenze Chiarine";
+        break;
+      default:
+        break;
+    }
+    return sheetName;
+  }
+
   export function getRuoloPersone(role) {
     let ruolo = "";
     switch (role) {

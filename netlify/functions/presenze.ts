@@ -30,7 +30,10 @@ async function authSheets() {
     const spreadsheetId = "10km3Xk8paNpDjUAXkaAHyib8C1QjZGzNA9a5XzvVdvU" // Please set the Spreadsheet ID.
     const sheetName = event.queryStringParameters != null ? event.queryStringParameters['sheetName'] : "Foglio1";
     const datePresenze = event.queryStringParameters != null ? event.queryStringParameters['datePresenze'] : "";
-
+    const filterData = event.queryStringParameters != null ? event.queryStringParameters['filterData'] : "";
+    let result:any;
+    if(filterData == "true")
+    {
     const res1 = await sheets.spreadsheets.get({spreadsheetId:spreadsheetId, ranges: [sheetName] });
     const sheetId = res1.data.sheets[0].properties.sheetId;
     const request = {
@@ -91,7 +94,7 @@ async function authSheets() {
       currentPres.push(getRows.data.values.at(e-1));
     })
     
-    const result:any = {currentPres:currentPres, values:values.showingRows.slice(1)};
+     result = {currentPres:currentPres, values:values.showingRows.slice(1)};
 
 
     const requestClear = {
@@ -106,7 +109,15 @@ async function authSheets() {
   }
 
   const clearFilter = await sheets.spreadsheets.batchUpdate(requestClear);
-
+}
+else
+{
+  const getRows = await sheets.spreadsheets.values.get({
+    spreadsheetId: spreadsheetId,
+    range: sheetName,
+  });
+  result = getRows.data;
+}
   
   return {
 			statusCode: 200,

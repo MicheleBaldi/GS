@@ -25,6 +25,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatDatepickerModule,} from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { ListaPresenzeComponent } from './lista-presenze/lista-presenze.component';
 
 
 
@@ -39,8 +40,8 @@ import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
     ListaUsciteIscrittoComponent,
     HomeComponent,
     SelezionaPersonaComponent,
-    InserisciPresenzeComponent
-  ],
+    InserisciPresenzeComponent,
+    ListaPresenzeComponent  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -101,7 +101,7 @@ export class InserisciPresenzeComponent {
     const date = event.value != null ? event.value : new Date();
 
     this.http
-      .get(`${baseUrl}/.netlify/functions/presenze?sheetName=${this.sheetName}&datePresenze=${date.toLocaleDateString('en-GB')}`)
+      .get(`${baseUrl}/.netlify/functions/presenze?sheetName=${this.sheetName}&datePresenze=${date.toLocaleDateString('en-GB')}&filterData=true`)
       .subscribe({
         next: (res: any) => {
           this.presenzeCurrent = res.result.values
