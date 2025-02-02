@@ -45,9 +45,7 @@ export class ListaPresenzeComponent {
         .get(`${baseUrl}/.netlify/functions/presenze?sheetName=${this.sheetName}&filterData=false`)
         .subscribe({
           next: (res: any) => {
-            debugger;
             this.presenze = res.result;
-            this
 
             this.presenze.values.forEach((el,index)=>{
               this.obj={};
