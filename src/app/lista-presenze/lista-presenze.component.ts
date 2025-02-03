@@ -30,7 +30,8 @@ export class ListaPresenzeComponent {
   mesi:any = [];
   objExpand:any;
   arrExpand:any = [];
-
+  isResponsabileGs:boolean = false;
+  selected = '';
   public displayedColumns = ['nome','presenze'];
   public detailDisplayedColumns = ['mesedesc','presenzemese'];
 
@@ -39,13 +40,32 @@ export class ListaPresenzeComponent {
     ) {}
 
   ngOnInit() {
+    debugger;
     if(this.auth.isAuthenticated$)
       {
         this.role = this.dataService.currentUser.role[0];
         this.sheetName=getSheetNameAggByRole(this.role);
-        const baseUrl = window.location.origin;
-        this.http
-        .get(`${baseUrl}/.netlify/functions/presenze?sheetName=${this.sheetName}&filterData=false`)
+        if(this.role == 'ResponsabileGs')
+          {
+            this.isResponsabileGs = true;
+            this.showPresenze = true;
+          }
+          else
+          {
+            this.reloadTable(this.sheetName)
+          }
+          
+      }
+  }
+
+  reloadTable(sheetName:string)
+  {
+    debugger;
+    this.showPresenze = false;
+    this.presenzeAnno =[];
+    const baseUrl = window.location.origin;
+    this.http
+        .get(`${baseUrl}/.netlify/functions/presenze?sheetName=${sheetName}&filterData=false`)
         .subscribe({
           next: (res: any) => {
             this.presenze = res.result;
@@ -82,7 +102,5 @@ export class ListaPresenzeComponent {
             alert('ERROR: ' + err.error);
           },
         });
-
-      }
   }
 }

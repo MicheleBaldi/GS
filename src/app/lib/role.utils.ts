@@ -28,6 +28,9 @@ export function getSheetNameByRole(role) {
       case 'ResponsabileChiarine':
         sheetName = "Presenze Chiarine";
         break;
+      case 'ResponsabileGs':
+        sheetName = "";
+        break;
       default:
         break;
     }
