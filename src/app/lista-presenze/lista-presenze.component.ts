@@ -28,8 +28,11 @@ export class ListaPresenzeComponent {
   expandedElement: any | null;
   obj:any;
   mesi:any = [];
+  objExpand:any;
+  arrExpand:any = [];
 
   public displayedColumns = ['nome','presenze'];
+  public detailDisplayedColumns = ['mesedesc','presenzemese'];
 
   constructor(
     private http: HttpClient, private dataService:DataService,public auth: AuthService,
@@ -49,26 +52,26 @@ export class ListaPresenzeComponent {
 
             this.presenze.values.forEach((el,index)=>{
               this.obj={};
+              
               let presenzafirstrow = this.presenze.values[1]
-              if(index == 1)
-              {
-                for(let i = 1; i <= el.length-2; i++)
-                {
-                  this.mesi.push(i);
-                }
-              }
+
               if(index > 1)
               {
+                this.arrExpand =[];
                 for(let i = 1; i <= presenzafirstrow.length-2; i++)
-                  {
-                    this.obj["mesedesc_"+i] = presenzafirstrow[i];
-                  }
-                this.obj["nome"] = el[0];
-                this.obj["presenze"] = el[el.length - 1];
+                {
+                  this.objExpand ={};
+                  this.objExpand["mesedesc"] = presenzafirstrow[i];
+                  this.arrExpand.push(this.objExpand);
+                }
                 for(let i = 1; i < el.length-1; i++)
                 {
-                  this.obj["mese_"+i] = el[i];
+                  this.arrExpand[i-1]["presenzemese"] = el[i];
                 }
+                this.obj["nome"] = el[0];
+                this.obj["presenze"] = el[el.length - 1];
+                this.obj["detailExpand"] = this.arrExpand;
+
                 this.presenzeAnno.push(this.obj);
               }
               
@@ -82,9 +85,4 @@ export class ListaPresenzeComponent {
 
       }
   }
-  rowClick(row:any)
-  {
-    console.log("click row")
-  }
-
 }
