@@ -40,7 +40,6 @@ export class ListaPresenzeComponent {
     ) {}
 
   ngOnInit() {
-    debugger;
     if(this.auth.isAuthenticated$)
       {
         this.role = this.dataService.currentUser.role[0];
@@ -60,7 +59,6 @@ export class ListaPresenzeComponent {
 
   reloadTable(sheetName:string)
   {
-    debugger;
     this.showPresenze = false;
     this.presenzeAnno =[];
     const baseUrl = window.location.origin;
@@ -70,6 +68,8 @@ export class ListaPresenzeComponent {
           next: (res: any) => {
             this.presenze = res.result;
 
+            let lastIndex = this.presenze.values.length - 1;
+
             this.presenze.values.forEach((el,index)=>{
               this.obj={};
               
@@ -77,6 +77,10 @@ export class ListaPresenzeComponent {
 
               if(index > 1)
               {
+                if(index == lastIndex)
+                {
+                   el = el.slice(0, presenzafirstrow.length);
+                }
                 this.arrExpand =[];
                 for(let i = 1; i <= presenzafirstrow.length-2; i++)
                 {
