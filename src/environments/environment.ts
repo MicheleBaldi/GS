@@ -7,6 +7,7 @@ export const environment = {
         redirect_uri: window.location.origin,
       },
       errorPath: '/',
-      scope: 'openid profile email'
+      scope: 'openid profile email',
+      sessionCheckExpiryDays:30
     }
   };
