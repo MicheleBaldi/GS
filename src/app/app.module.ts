@@ -26,6 +26,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatDatepickerModule,} from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { ListaPresenzeComponent } from './lista-presenze/lista-presenze.component';
+import { PersistanceService } from './service/persistance.service';
 
 
 
@@ -68,7 +69,7 @@ import { ListaPresenzeComponent } from './lista-presenze/lista-presenze.componen
     NgbModule,
 
   ],
-  providers: [DataService,MatDatepickerModule, MatNativeDateModule,{provide: MAT_DATE_LOCALE, useValue: 'it-IT'}  ],
+  providers: [DataService,PersistanceService, MatDatepickerModule, MatNativeDateModule,{provide: MAT_DATE_LOCALE, useValue: 'it-IT'}  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
