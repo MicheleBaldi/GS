@@ -6,6 +6,8 @@ import { DataService } from './service/data.service';
 import { AuthService } from '@auth0/auth0-angular';
 import { Router } from '@angular/router';
 import { PersistanceService } from './service/persistance.service';
+import { getSheetNameAggByRuoloAirtable } from './lib/role.utils';
+
 
 @Component({
   selector: 'app-root',
@@ -20,6 +22,9 @@ export class AppComponent {
   user:any;
   imgProfile:string="/assets/gs.png";
   showInsPresenze:any;
+  sheetName:any;
+  numPresenze:any;
+  provaTotali:any;
 
   constructor(private observer: BreakpointObserver,
     private http: HttpClient,
@@ -43,7 +48,6 @@ export class AppComponent {
               this.dataService.currentUser = this.user;
               this.showInsPresenze = this.dataService.currentUser.role.length > 0
               const baseUrl = window.location.origin;
-              debugger;
               if(this.user.personaid != null)
               {
                 if(this.persister.get('PERSONA') == null)
@@ -72,6 +76,21 @@ export class AppComponent {
                   if(this.persona.persona.fields['Foto Profilo'].length > 0)
                   this.imgProfile= this.persona.persona.fields['Foto Profilo'][0].url;
                 }
+                this.sheetName = getSheetNameAggByRuoloAirtable(this.persona.persona.fields['Ruolo']);
+                this.http
+                      .get(`${baseUrl}/.netlify/functions/presenze?sheetName=${this.sheetName}&filterData=false`)
+                      .subscribe({
+                        next: (res: any) => {
+                         let presenzafirstrow = res.result.values[1];
+                         let presenzaLastRow = res.result.values.at(-1).slice(0, presenzafirstrow.length);
+                         
+                         this.numPresenze = res.result.values.find(item => item[0] === this.persona.persona.fields['Nome']).at(-1);
+                        this.provaTotali = presenzaLastRow.at(-1);
+                        },
+                        error: (err) => {
+                          alert('ERROR: ' + err.error);
+                        },
+                      });
               }
               else
               {

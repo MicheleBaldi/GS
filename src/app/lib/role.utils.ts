@@ -54,3 +54,22 @@ export function getSheetNameByRole(role) {
     }
     return ruolo;
   }
+
+  
+  export function getSheetNameAggByRuoloAirtable(role) {
+    let sheetName = "Foglio1";
+    switch (role) {
+      case 'Sbandieratore':
+        sheetName = "Presenze Sbandieratori";
+        break;
+      case 'Tamburino':
+        sheetName = "Presenze Tamburi";
+        break;
+      case 'Chiarina':
+        sheetName = "Presenze Chiarine";
+        break;
+      default:
+        break;
+    }
+    return sheetName;
+  }
