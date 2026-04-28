@@ -60,7 +60,7 @@ export class AppComponent {
                       this.persister.set('PERSONA', this.persona);
                       this.dataService.persona = res;
                       this.dataService.isAuthenticate = true;
-                      if(this.persona.persona.fields['Foto Profilo'].length > 0)
+                      if('Foto Profilo' in this.persona.persona.fields && this.persona.persona.fields['Foto Profilo'].length > 0)
                         this.imgProfile= this.persona.persona.fields['Foto Profilo'][0].url;
                     },
                     error: (err) => {
@@ -73,7 +73,7 @@ export class AppComponent {
                   this.persona = this.persister.get('PERSONA');
                   this.dataService.persona = this.persona;
                   this.dataService.isAuthenticate = true;
-                  if(this.persona.persona.fields['Foto Profilo'].length > 0)
+                  if('Foto Profilo' in this.persona.persona.fields && this.persona.persona.fields['Foto Profilo'].length > 0)
                   this.imgProfile= this.persona.persona.fields['Foto Profilo'][0].url;
                 }
                 this.sheetName = getSheetNameAggByRuoloAirtable(this.persona.persona.fields['Ruolo']);
