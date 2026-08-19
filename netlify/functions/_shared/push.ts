@@ -52,6 +52,10 @@ async function loadSubscriptions(): Promise<PushSub[]> {
 		.filter(Boolean) as PushSub[];
 }
 
+function vapidSubject() {
+	return process.env.VAPID_SUBJECT || process.env.URL || 'mailto:admin@gscortona.it';
+}
+
 function vapidDebugMeta() {
 	const publicUsed = VAPID_PUBLIC_KEY || DEFAULT_PUBLIC;
 	return {
@@ -61,6 +65,7 @@ function vapidDebugMeta() {
 		publicLen: String(publicUsed).length,
 		privateLen: VAPID_PRIVATE_KEY ? String(VAPID_PRIVATE_KEY).length : 0,
 		usedDefaultPublic: !VAPID_PUBLIC_KEY,
+		subject: vapidSubject(),
 	};
 }
 
@@ -69,7 +74,7 @@ function ensureVapid() {
 		throw new Error('VAPID_PRIVATE_KEY non configurata');
 	}
 	webpush.setVapidDetails(
-		'mailto:admin@gscortona.local',
+		vapidSubject(),
 		VAPID_PUBLIC_KEY || DEFAULT_PUBLIC,
 		VAPID_PRIVATE_KEY
 	);
