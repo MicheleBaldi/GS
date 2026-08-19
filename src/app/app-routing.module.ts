@@ -7,6 +7,7 @@ import { ListaUsciteIscrittoComponent } from './lista-uscite-iscritto/lista-usci
 import { SelezionaPersonaComponent } from './seleziona-persona/seleziona-persona.component';
 import { InserisciPresenzeComponent } from './inserisci-presenze/inserisci-presenze.component';
 import { ListaPresenzeComponent } from './lista-presenze/lista-presenze.component';
+import { ConvocazioneComponent } from './convocazione/convocazione.component';
 
 const routes: Routes = [
 	{
@@ -36,6 +37,10 @@ const routes: Routes = [
 	{
 		path: 'lista-presenze',
 		component: ListaPresenzeComponent
+	},
+	{
+		path: 'convocazione',
+		component: ConvocazioneComponent
 	}
 
 

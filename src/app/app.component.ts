@@ -7,6 +7,9 @@ import { AuthService } from '@auth0/auth0-angular';
 import { Router } from '@angular/router';
 import { PersistanceService } from './service/persistance.service';
 import { getSheetNameAggByRuoloAirtable } from './lib/role.utils';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PushNotificationService } from './service/push-notification.service';
+import { PushPromptComponent } from './push-prompt/push-prompt.component';
 
 
 @Component({
@@ -25,13 +28,16 @@ export class AppComponent {
   sheetName:any;
   numPresenze:any;
   provaTotali:any;
+  private pushPromptOpened = false;
 
   constructor(private observer: BreakpointObserver,
     private http: HttpClient,
     public dataService: DataService,
     public auth: AuthService,
     private router:Router,
-    private persister: PersistanceService) {}
+    private persister: PersistanceService,
+    private modalService: NgbModal,
+    private pushService: PushNotificationService) {}
 
   ngOnInit(){
     this.auth.isAuthenticated$.subscribe({
@@ -62,6 +68,8 @@ export class AppComponent {
                       this.dataService.isAuthenticate = true;
                       if('Foto Profilo' in this.persona.persona.fields && this.persona.persona.fields['Foto Profilo'].length > 0)
                         this.imgProfile= this.persona.persona.fields['Foto Profilo'][0].url;
+                      this.loadPresenzeSummary(baseUrl);
+                      this.maybeShowPushPrompt();
                     },
                     error: (err) => {
                       alert('ERROR: ' + err.error);
@@ -75,22 +83,9 @@ export class AppComponent {
                   this.dataService.isAuthenticate = true;
                   if('Foto Profilo' in this.persona.persona.fields && this.persona.persona.fields['Foto Profilo'].length > 0)
                   this.imgProfile= this.persona.persona.fields['Foto Profilo'][0].url;
+                  this.loadPresenzeSummary(baseUrl);
+                  this.maybeShowPushPrompt();
                 }
-                this.sheetName = getSheetNameAggByRuoloAirtable(this.persona.persona.fields['Ruolo']);
-                this.http
-                      .get(`${baseUrl}/.netlify/functions/presenze?sheetName=${this.sheetName}&filterData=false`)
-                      .subscribe({
-                        next: (res: any) => {
-                         let presenzafirstrow = res.result.values[1];
-                         let presenzaLastRow = res.result.values.at(-1).slice(0, presenzafirstrow.length);
-                         
-                         this.numPresenze = res.result.values.find(item => item[0] === this.persona.persona.fields['Nome']).at(-1);
-                        this.provaTotali = presenzaLastRow.at(-1);
-                        },
-                        error: (err) => {
-                          alert('ERROR: ' + err.error);
-                        },
-                      });
               }
               else
               {
@@ -105,6 +100,42 @@ export class AppComponent {
         }
       })
     
+  }
+
+  private loadPresenzeSummary(baseUrl: string) {
+    this.sheetName = getSheetNameAggByRuoloAirtable(this.persona?.persona?.fields?.['Ruolo']);
+    if (!this.sheetName) {
+      return;
+    }
+    this.http
+      .get(`${baseUrl}/.netlify/functions/presenze?sheetName=${this.sheetName}&filterData=false`)
+      .subscribe({
+        next: (res: any) => {
+          let presenzafirstrow = res.result.values[1];
+          let presenzaLastRow = res.result.values.at(-1).slice(0, presenzafirstrow.length);
+
+          this.numPresenze = res.result.values.find(item => item[0] === this.persona.persona.fields['Nome']).at(-1);
+          this.provaTotali = presenzaLastRow.at(-1);
+        },
+        error: (err) => {
+          alert('ERROR: ' + err.error);
+        },
+      });
+  }
+
+  private maybeShowPushPrompt() {
+    if (this.pushPromptOpened || !this.pushService.shouldPrompt()) {
+      return;
+    }
+    this.pushPromptOpened = true;
+    setTimeout(() => {
+      const ref = this.modalService.open(PushPromptComponent, {
+        backdrop: 'static',
+        keyboard: false,
+        centered: true
+      });
+      ref.componentInstance.personaid = this.user?.personaid || null;
+    }, 0);
   }
 
   ngAfterViewInit() {

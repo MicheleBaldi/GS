@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListaUsciteComponent } from './lista-uscite/lista-uscite.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgMaterialModule } from './ng-material/ng-material.module'
 import { AuthModule } from '@auth0/auth0-angular';
@@ -27,7 +27,9 @@ import {MatDatepickerModule,} from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { ListaPresenzeComponent } from './lista-presenze/lista-presenze.component';
 import { PersistanceService } from './service/persistance.service';
-
+import { ConvocazioneComponent } from './convocazione/convocazione.component';
+import { PushNotificationService } from './service/push-notification.service';
+import { PushPromptComponent } from './push-prompt/push-prompt.component';
 
 
 
@@ -42,34 +44,35 @@ import { PersistanceService } from './service/persistance.service';
     HomeComponent,
     SelezionaPersonaComponent,
     InserisciPresenzeComponent,
-    ListaPresenzeComponent  ],
+    ListaPresenzeComponent,
+    ConvocazioneComponent,
+    PushPromptComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule, 
-    ReactiveFormsModule, 
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     NgMaterialModule,
     MatSelectModule,
-    MatFormFieldModule, // it's redundant here since MatInputModule already exports it
+    MatFormFieldModule,
     MatCheckboxModule,
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule ,
+    MatNativeDateModule,
     AuthModule.forRoot({
       ...env.auth0,
     }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
     NgbModule,
-
   ],
-  providers: [DataService,PersistanceService, MatDatepickerModule, MatNativeDateModule,{provide: MAT_DATE_LOCALE, useValue: 'it-IT'}  ],
+  providers: [DataService, PersistanceService, PushNotificationService, MatDatepickerModule, MatNativeDateModule,{provide: MAT_DATE_LOCALE, useValue: 'it-IT'}  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

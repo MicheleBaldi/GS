@@ -1,0 +1,14 @@
+<div class="modal-header">
+  <h4 class="modal-title">Attiva le notifiche</h4>
+</div>
+<div class="modal-body">
+  <p>Vuoi ricevere notifiche sulle nuove uscite e aggiornamenti importanti?</p>
+  <p class="text-danger small" *ngIf="errorMessage">{{ errorMessage }}</p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="nonOra()" [disabled]="busy">Non ora</button>
+  <button type="button" class="btn btn-primary" (click)="attiva()" [disabled]="busy">
+    <span *ngIf="busy" class="spinner-border spinner-border-sm me-1" role="status"></span>
+    Attiva
+  </button>
+</div>

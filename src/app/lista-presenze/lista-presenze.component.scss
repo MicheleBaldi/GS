@@ -2,6 +2,14 @@ table {
   width: 100%;
 }
 
+.filters {
+  margin-bottom: 8px;
+}
+
+.filters mat-form-field {
+  min-width: 220px;
+}
+
 tr.example-detail-row {
   height: 0;
 }

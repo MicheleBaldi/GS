@@ -1,0 +1,28 @@
+.example-element-detail {
+  overflow: hidden;
+}
+
+.example-detail-row {
+  height: 0;
+}
+
+.example-element-row:hover {
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.example-expanded-row {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.iscritti-panel {
+  padding: 12px 8px 16px;
+}
+
+.iscritto-row {
+  margin-bottom: 4px;
+}
+.btn-primary{
+    background-color: #FF0000 !important; 
+    border-color: #FFFFFF !important;
+  }

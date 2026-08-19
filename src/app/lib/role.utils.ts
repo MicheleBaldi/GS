@@ -29,6 +29,7 @@ export function getSheetNameByRole(role) {
         sheetName = "Presenze Chiarine";
         break;
       case 'ResponsabileGs':
+      case 'ResponsabileMusici':
         sheetName = "";
         break;
       default:
@@ -72,4 +73,42 @@ export function getSheetNameByRole(role) {
         break;
     }
     return sheetName;
+  }
+
+  export function needsRuoloSelect(role: string): boolean {
+    return role === 'ResponsabileMusici' || role === 'ResponsabileGs';
+  }
+
+  export function getRuoloOptions(role: string): { value: string; label: string }[] {
+    if (role === 'ResponsabileMusici') {
+      return [
+        { value: 'ResponsabileTamburi', label: 'Tamburi' },
+        { value: 'ResponsabileChiarine', label: 'Chiarine' },
+      ];
+    }
+    if (role === 'ResponsabileGs') {
+      return [
+        { value: 'ResponsabileSband', label: 'Sbandieratori' },
+        { value: 'ResponsabileTamburi', label: 'Tamburi' },
+        { value: 'ResponsabileChiarine', label: 'Chiarine' },
+      ];
+    }
+    return [];
+  }
+
+  export function getPresenzeSheetOptions(role: string): { value: string; label: string }[] {
+    if (role === 'ResponsabileMusici') {
+      return [
+        { value: 'Presenze Tamburi', label: 'Tamburi' },
+        { value: 'Presenze Chiarine', label: 'Chiarine' },
+      ];
+    }
+    if (role === 'ResponsabileGs') {
+      return [
+        { value: 'Presenze Sbandieratori', label: 'Sbandieratori' },
+        { value: 'Presenze Tamburi', label: 'Tamburi' },
+        { value: 'Presenze Chiarine', label: 'Chiarine' },
+      ];
+    }
+    return [];
   }

@@ -15,6 +15,7 @@ export class ListaUsciteComponent {
   saggi: any;
   modalTitle:any;
   saggiPersona:any;
+  dettagliUscita:any;
   showUscite=false;
   isChiarina=false;
 
@@ -42,94 +43,96 @@ export class ListaUsciteComponent {
   ngOnInit(): void {
     if(this.auth.isAuthenticated$)
     {
-      this.saggiPersona=[];
+      //this.saggiPersona=[];
       const baseUrl = window.location.origin;
       this.http
         .get(`${baseUrl}/.netlify/functions/uscite`)
         .subscribe({
           next: (res: any) => {
             this.uscite = res;
-            if(this.dataService.persona.persona.fields.Ruolo =='Sbandieratore')
-              {
-                this.modalTitle="Saggi Assegnati";
-                this.http
-                  .get(`${baseUrl}/.netlify/functions/saggisbandieratori`)
-                  .subscribe({
-                    next:(r:any)=>{
-                      this.saggi = r.saggi.filter(x=> x.fields.Presenti.includes(this.dataService.currentUser.personaid));
-                      this.uscite.uscite.forEach(element => {
-                        element.fields.saggiUscita=[];
-                        if(element.fields['Saggi Pronti'])
-                          {
-                            let saggiUscita = this.saggi.filter(x=> x.fields.Uscita.includes(element.id));
-                            if(saggiUscita.length > 0 && saggiUscita[0].fields['Saggi Assegnati'] != null)
-                              {
-                                saggiUscita[0].fields['Saggi Assegnati'].forEach(e=>{
-                                  element.fields.saggiUscita.push(this.AnagSaggi.filter(x=>x.id == e)[0]);
-                                });
-                              }
-                              else
-                              {
-                                element.fields.saggiUscita=[{'id':'','nome':'Nessun saggio assegnato'}];
-                              }
-                          }
-                          else
-                          {
-                            element.fields.saggiUscita=[{'id':'','nome':'Saggi non ancora assegnati'}];
-                          }
-                          this.showUscite = true;
-                      });
-                    },
-                    error: (err) => {
-                      alert('ERROR: ' + err.error);
-                    },
-                });
-              }
-              if(this.dataService.persona.persona.fields.Ruolo =='Tamburino')
-              {
-                this.modalTitle="Ruoli Uscita";
-                this.http
-                .get(`${baseUrl}/.netlify/functions/ruolitamburi`)
-                .subscribe({
-                  next:(r:any)=>{
-                    this.saggi = r.ruoliTamburi.filter(x=> x.fields.Presenti.includes(this.dataService.currentUser.personaid));
-                    this.uscite.uscite.forEach(element => {
-                      element.fields.saggiUscita=[];
-                      if(element.fields['Ruoli Pronti'])
-                      {
-                        let saggiUscita = this.saggi.filter(x=> x.fields.Uscita.includes(element.id));
-                        if(saggiUscita.length > 0 && saggiUscita[0].fields['Ruolo Tamburino Assegnato'] != null)
-                        {
-                          saggiUscita[0].fields['Ruolo Tamburino Assegnato'].forEach(e=>{
-                            element.fields.saggiUscita.push(this.AnagRuoli.filter(x=>x.id == e)[0]);
-                          });
-                        }
-                        else
-                        {
-                          element.fields.saggiUscita=[{'id':'','nome':'Nessun ruolo assegnato'}];
-                        }
-                      }
-                      else
-                      {
-                        element.fields.saggiUscita=[{'id':'','nome':'Ruoli non ancora assegnati'}];
-                      }
-                        this.showUscite = true;
-                    });
-                  },
-                  error: (err) => {
-                    alert('ERROR: ' + err.error);
-                  },
-                });
-              }
-              if(this.dataService.persona.persona.fields.Ruolo =='Chiarina')
-              {
-                this.modalTitle="Ruoli Uscita";
-                this.uscite.uscite.forEach(element => {
-                  element.fields.saggiUscita=[{'id':'','nome':'PEPEREPPE'}];
-                });
-                this.showUscite = true;
-                this.isChiarina = true;
-              }
+            this.modalTitle = "Informazioni Uscita";
+            this.showUscite = true;
+            // if(this.dataService.persona.persona.fields.Ruolo =='Sbandieratore')
+            //   {
+            //     this.modalTitle="Saggi Assegnati";
+            //     this.http
+            //       .get(`${baseUrl}/.netlify/functions/saggisbandieratori`)
+            //       .subscribe({
+            //         next:(r:any)=>{
+            //           this.saggi = r.saggi.filter(x=> x.fields.Presenti.includes(this.dataService.currentUser.personaid));
+            //           this.uscite.uscite.forEach(element => {
+            //             element.fields.saggiUscita=[];
+            //             if(element.fields['Saggi Pronti'])
+            //               {
+            //                 let saggiUscita = this.saggi.filter(x=> x.fields.Uscita.includes(element.id));
+            //                 if(saggiUscita.length > 0 && saggiUscita[0].fields['Saggi Assegnati'] != null)
+            //                   {
+            //                     saggiUscita[0].fields['Saggi Assegnati'].forEach(e=>{
+            //                       element.fields.saggiUscita.push(this.AnagSaggi.filter(x=>x.id == e)[0]);
+            //                     });
+            //                   }
+            //                   else
+            //                   {
+            //                     element.fields.saggiUscita=[{'id':'','nome':'Nessun saggio assegnato'}];
+            //                   }
+            //               }
+            //               else
+            //               {
+            //                 element.fields.saggiUscita=[{'id':'','nome':'Saggi non ancora assegnati'}];
+            //               }
+            //               this.showUscite = true;
+            //           });
+            //         },
+            //         error: (err) => {
+            //           alert('ERROR: ' + err.error);
+            //         },
+            //     });
+            //   }
+            //   if(this.dataService.persona.persona.fields.Ruolo =='Tamburino')
+            //   {
+            //     this.modalTitle="Ruoli Uscita";
+            //     this.http
+            //     .get(`${baseUrl}/.netlify/functions/ruolitamburi`)
+            //     .subscribe({
+            //       next:(r:any)=>{
+            //         this.saggi = r.ruoliTamburi.filter(x=> x.fields.Presenti.includes(this.dataService.currentUser.personaid));
+            //         this.uscite.uscite.forEach(element => {
+            //           element.fields.saggiUscita=[];
+            //           if(element.fields['Ruoli Pronti'])
+            //           {
+            //             let saggiUscita = this.saggi.filter(x=> x.fields.Uscita.includes(element.id));
+            //             if(saggiUscita.length > 0 && saggiUscita[0].fields['Ruolo Tamburino Assegnato'] != null)
+            //             {
+            //               saggiUscita[0].fields['Ruolo Tamburino Assegnato'].forEach(e=>{
+            //                 element.fields.saggiUscita.push(this.AnagRuoli.filter(x=>x.id == e)[0]);
+            //               });
+            //             }
+            //             else
+            //             {
+            //               element.fields.saggiUscita=[{'id':'','nome':'Nessun ruolo assegnato'}];
+            //             }
+            //           }
+            //           else
+            //           {
+            //             element.fields.saggiUscita=[{'id':'','nome':'Ruoli non ancora assegnati'}];
+            //           }
+            //             this.showUscite = true;
+            //         });
+            //       },
+            //       error: (err) => {
+            //         alert('ERROR: ' + err.error);
+            //       },
+            //     });
+            //   }
+            //   if(this.dataService.persona.persona.fields.Ruolo =='Chiarina')
+            //   {
+            //     this.modalTitle="Ruoli Uscita";
+            //     this.uscite.uscite.forEach(element => {
+            //       element.fields.saggiUscita=[{'id':'','nome':'PEPEREPPE'}];
+            //     });
+            //     this.showUscite = true;
+            //     this.isChiarina = true;
+            //   }
           },
           error: (err) => {
             alert('ERROR: ' + err.error);
@@ -164,12 +167,14 @@ export class ListaUsciteComponent {
   }
 
   open(content: any, element:any) {
-    this.saggiPersona= element.fields.saggiUscita
+    //this.saggiPersona= element.fields.saggiUscita
+    debugger;
+    this.dettagliUscita = element.fields.Dettagli;
     this.modalService.open(content);
   }
 
   closeModal() {
-    this.saggiPersona=[];
+    //this.saggiPersona=[];
     this.modalService.dismissAll();
   }
 

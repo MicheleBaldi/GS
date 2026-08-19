@@ -4,14 +4,21 @@
         <span class="visually-hidden">Loading...</span>
       </div>
     </div>
-    <mat-form-field *ngIf="showPresenze && isResponsabileGs">
-      <mat-label>Seleziona Ruolo</mat-label>
-      <mat-select [(value)]="selected" (selectionChange)="reloadTable(selected)">
-        <mat-option value="Presenze Sbandieratori">Sbandieratori</mat-option>
-        <mat-option value="Presenze Tamburi">Tamburi</mat-option>
-        <mat-option value="Presenze Chiarine">Chiarine</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div class="d-flex flex-wrap gap-3 filters" *ngIf="showPresenze && (needsSelect || mesi.length)">
+      <mat-form-field *ngIf="needsSelect">
+        <mat-label>Seleziona Ruolo</mat-label>
+        <mat-select [(value)]="selected" (selectionChange)="reloadTable(selected)">
+          <mat-option *ngFor="let opt of sheetOptions" [value]="opt.value">{{opt.label}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="mesi.length">
+        <mat-label>Filtra per mese</mat-label>
+        <mat-select [(value)]="selectedMesi" multiple (selectionChange)="applyMonthFilter()">
+          <mat-option *ngFor="let mese of mesi" [value]="mese">{{ mese }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
     <table mat-table *ngIf="showPresenze" [dataSource]="this.presenzeAnno" multiTemplateDataRows>
 
