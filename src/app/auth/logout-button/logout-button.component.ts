@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
-import { DOCUMENT } from '@angular/common';
+import { DataService } from '../../service/data.service';
 
 @Component({
   selector: 'app-logout-button',
@@ -8,5 +8,5 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./logout-button.component.scss']
 })
 export class LogoutButtonComponent {
-  constructor(@Inject(DOCUMENT) public document: Document, public auth: AuthService) {}
+  constructor(public auth: AuthService, public dataService: DataService) {}
 }

@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService, User } from '@auth0/auth0-angular';
+import { marked } from 'marked';
 import { DataService } from '../service/data.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -168,9 +169,19 @@ export class ListaUsciteComponent {
 
   open(content: any, element:any) {
     //this.saggiPersona= element.fields.saggiUscita
-    debugger;
-    this.dettagliUscita = element.fields.Dettagli;
+    this.dettagliUscita = this.formatAirtableRichText(element.fields.Dettagli);
     this.modalService.open(content);
+  }
+
+  formatAirtableRichText(raw: unknown): string {
+    if (typeof raw !== 'string' || !raw) {
+      return '';
+    }
+    const withTasks = raw.replace(
+      /^(\s*)\[([ xX])\]\s+/gm,
+      (_, indent, mark) => `${indent}- [${mark === ' ' ? ' ' : 'x'}] `
+    );
+    return marked.parse(withTasks, { gfm: true, breaks: true }) as string;
   }
 
   closeModal() {

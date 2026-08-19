@@ -4,6 +4,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { DataService } from '../service/data.service';
 import { HttpClient } from '@angular/common/http';
 import { PushNotificationService } from '../service/push-notification.service';
+import { PwaInstallService } from '../service/pwa-install.service';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,8 @@ export class HomeComponent {
     private router:Router,
     public dataService:DataService,
     private http: HttpClient,
-    private pushService: PushNotificationService
+    private pushService: PushNotificationService,
+    public pwa: PwaInstallService
   ) { }
 
   ngOnInit(): void {

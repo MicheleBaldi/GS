@@ -6,3 +6,51 @@
     background-color: #50C878 !important; 
     border-color: #FFFFFF !important;
 }
+
+.dettagli-uscita {
+  h1, h2, h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0.5rem 0 0.35rem;
+  }
+
+  p {
+    margin: 0 0 0.5rem;
+  }
+
+  ul, ol {
+    margin: 0 0 0.5rem;
+    padding-left: 1.25rem;
+  }
+
+  blockquote {
+    margin: 0 0 0.5rem;
+    padding-left: 0.75rem;
+    border-left: 3px solid #ccc;
+    color: #555;
+  }
+
+  code {
+    font-size: 0.9em;
+    background: #f4f4f4;
+    padding: 0.1em 0.3em;
+    border-radius: 3px;
+  }
+
+  pre {
+    margin: 0 0 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: #f4f4f4;
+    border-radius: 4px;
+    overflow-x: auto;
+
+    code {
+      padding: 0;
+      background: none;
+    }
+  }
+
+  input[type='checkbox'] {
+    margin-right: 0.35rem;
+  }
+}

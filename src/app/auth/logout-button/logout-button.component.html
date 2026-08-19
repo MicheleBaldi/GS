@@ -1,5 +1,5 @@
 <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
-    <button (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
+    <button (click)="dataService.logout()">
       Log out
     </button>
   </ng-container>

@@ -30,6 +30,7 @@ import { PersistanceService } from './service/persistance.service';
 import { ConvocazioneComponent } from './convocazione/convocazione.component';
 import { PushNotificationService } from './service/push-notification.service';
 import { PushPromptComponent } from './push-prompt/push-prompt.component';
+import { PwaInstallService } from './service/pwa-install.service';
 
 
 
@@ -72,7 +73,7 @@ import { PushPromptComponent } from './push-prompt/push-prompt.component';
     }),
     NgbModule,
   ],
-  providers: [DataService, PersistanceService, PushNotificationService, MatDatepickerModule, MatNativeDateModule,{provide: MAT_DATE_LOCALE, useValue: 'it-IT'}  ],
+  providers: [DataService, PersistanceService, PushNotificationService, PwaInstallService, MatDatepickerModule, MatNativeDateModule,{provide: MAT_DATE_LOCALE, useValue: 'it-IT'}  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
