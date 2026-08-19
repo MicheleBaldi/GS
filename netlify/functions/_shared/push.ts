@@ -6,7 +6,8 @@ const SPREADSHEET_ID = '10km3Xk8paNpDjUAXkaAHyib8C1QjZGzNA9a5XzvVdvU';
 const SHEET_NAME = 'Notifiche';
 const SHEET_RANGE = `${SHEET_NAME}!A:D`;
 
-const DEFAULT_PUBLIC = 'BLBx-hf2WrL2qEa0qKb-aCJbcxEvyn62GDTyyP9KTS5K7ZL0K7TfmOKSPqp8vQF0DaG8hpSBknz_x3qf5F4iEFo';
+// Must match src/environments/environment.ts vapidPublicKey (pair of VAPID_PRIVATE_KEY).
+const DEFAULT_PUBLIC = 'BCxbVn1MCL9HfXhC7eCQPA5P8fodz2918RzSPRNVUAF8AWSndD1LtKg7wDvBYTDIUOaud5S4k4NQgvhZqcdDWIw';
 
 type PushSub = {
 	endpoint: string;
