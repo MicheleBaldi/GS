@@ -35,16 +35,10 @@ export class HomeComponent {
     this.pushBusy = true;
     this.pushService.sendExampleNotification().subscribe({
       next: (res: any) => {
-        // #region agent log
-        fetch('http://127.0.0.1:7426/ingest/c582076e-daa3-46f3-b028-fea869801e45',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'0484f6'},body:JSON.stringify({sessionId:'0484f6',hypothesisId:'A,B,C,E',location:'home.component.ts:inviaNotificaEsempio',message:'send-push response',data:{message:res?.message,sent:res?.sent,total:res?.total,errors:res?.errors,vapidMeta:res?.vapidMeta},timestamp:Date.now()})}).catch(()=>{});
-        // #endregion
         alert(res.message || 'Notifica inviata');
         this.pushBusy = false;
       },
       error: (err) => {
-        // #region agent log
-        fetch('http://127.0.0.1:7426/ingest/c582076e-daa3-46f3-b028-fea869801e45',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'0484f6'},body:JSON.stringify({sessionId:'0484f6',hypothesisId:'E',location:'home.component.ts:inviaNotificaEsempio',message:'send-push http error',data:{status:err?.status,error:err?.error,httpMessage:err?.message},timestamp:Date.now()})}).catch(()=>{});
-        // #endregion
         alert('ERROR: ' + (err?.error || err?.message || err));
         this.pushBusy = false;
       }
