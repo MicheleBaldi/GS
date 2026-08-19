@@ -39,6 +39,10 @@
         <mat-icon>list</mat-icon>
         <span>Lista Presenze</span>
       </button>
+      <button mat-button class="menu-button" routerLink="/convocazione" *ngIf="showInsPresenze">
+        <mat-icon>campaign</mat-icon>
+        <span>Convocazione</span>
+      </button>
       <!-- <button mat-button class="menu-button" routerLink="/lista-uscite-iscritto">
         <mat-icon>event</mat-icon>
         <span>Verfica Iscrizioni</span>

@@ -1,6 +1,13 @@
 <h2>Inserimento Presenze</h2>
 
-<form [formGroup]="formPresenze" autocomplete="off" (ngSubmit)="submit()" style="height: calc(100vh - 180px);">
+<mat-form-field *ngIf="needsSelect" class="w-100">
+  <mat-label>Seleziona ruolo</mat-label>
+  <mat-select [(value)]="selectedRuolo" (selectionChange)="onRuoloChange($event.value)">
+    <mat-option *ngFor="let opt of ruoloOptions" [value]="opt.value">{{opt.label}}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<form [formGroup]="formPresenze" autocomplete="off" (ngSubmit)="submit()" style="height: calc(100vh - 180px);" *ngIf="!needsSelect || selectedRuolo">
     <mat-form-field>
         <mat-label>Scelgi una data</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="data" (dateChange)="valueChanged($event)">

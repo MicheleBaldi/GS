@@ -4,7 +4,7 @@ import { FormArray, FormGroup, FormBuilder, FormControl, Validators } from '@ang
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DataService } from '../service/data.service';
-import { getRuoloPersone, getSheetNameByRole } from '../lib/role.utils';
+import { getRuoloOptions, getRuoloPersone, getSheetNameByRole, needsRuoloSelect } from '../lib/role.utils';
 
 
 @Component({
@@ -18,9 +18,13 @@ export class InserisciPresenzeComponent {
   presenzeCurrent:any;
   personeArr:any;
   role:any;
+  operativeRole:any;
   sheetName:any;
   ruoloPersone:any
   isDisabled:any=false;
+  needsSelect = false;
+  ruoloOptions: { value: string; label: string }[] = [];
+  selectedRuolo = '';
 
   public displayedColumns = ['Nome','actions'];
 
@@ -30,35 +34,64 @@ export class InserisciPresenzeComponent {
 
   ngOnInit() {
     this.role = this.dataService.currentUser.role[0];
-    this.sheetName=getSheetNameByRole(this.role);
-    this.ruoloPersone = getRuoloPersone(this.role);
-
     this.formPresenze = this._formBuilder.group({
       data: [undefined, Validators.required],
       persone: this._formBuilder.array([])
     });
 
-    const baseUrl = window.location.origin;
-        this.http
-          .get(`${baseUrl}/.netlify/functions/personelist?ruolo=${this.ruoloPersone}`)
-          .subscribe({
-            next: (res: any) => {
-              this.personeArr = res.persone;
-              res.persone.forEach(element => {
-                const fg = new FormGroup({
-                  id: new FormControl(element.id),
-                  nome: new FormControl(element.fields.Nome),
-                  presente: new FormControl()
-                });
+    this.needsSelect = needsRuoloSelect(this.role) && this.role === 'ResponsabileMusici';
+    if (this.needsSelect) {
+      this.ruoloOptions = getRuoloOptions(this.role);
+      this.showForm = true;
+    } else {
+      this.applyOperativeRole(this.role);
+      this.loadPersone();
+    }
+  }
 
-                this.persone.push(fg);
-              });
-              this.showForm = true;
-            },
-            error: (err) => {
-              alert('ERROR: ' + err.error);
-            },
+  onRuoloChange(value: string) {
+    this.applyOperativeRole(value);
+    this.clearPersone();
+    this.formPresenze.controls['data'].reset();
+    this.loadPersone();
+  }
+
+  private applyOperativeRole(role: string) {
+    this.operativeRole = role;
+    this.sheetName = getSheetNameByRole(role);
+    this.ruoloPersone = getRuoloPersone(role);
+  }
+
+  private clearPersone() {
+    while (this.persone.length) {
+      this.persone.removeAt(0);
+    }
+    this.personeArr = [];
+  }
+
+  private loadPersone() {
+    this.showForm = false;
+    const baseUrl = window.location.origin;
+    this.http
+      .get(`${baseUrl}/.netlify/functions/personelist?ruolo=${this.ruoloPersone}`)
+      .subscribe({
+        next: (res: any) => {
+          this.personeArr = res.persone;
+          res.persone.forEach(element => {
+            const fg = new FormGroup({
+              id: new FormControl(element.id),
+              nome: new FormControl(element.fields.Nome),
+              presente: new FormControl()
+            });
+
+            this.persone.push(fg);
           });
+          this.showForm = true;
+        },
+        error: (err) => {
+          alert('ERROR: ' + err.error);
+        },
+      });
   }
 
   get persone(): FormArray {
@@ -94,6 +127,9 @@ export class InserisciPresenzeComponent {
   }
 
   valueChanged(event: MatDatepickerInputEvent<Date>){
+    if (!this.sheetName) {
+      return;
+    }
     this.showForm = false;
     this.resetForm(false);
     const personeArr = this.formPresenze.controls['persone'] as FormArray;

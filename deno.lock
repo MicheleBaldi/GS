@@ -32,6 +32,7 @@
         "npm:@ng-bootstrap/ng-bootstrap@^15.0.1",
         "npm:@popperjs/core@^2.11.6",
         "npm:@types/jasmine@4.3",
+        "npm:@types/web-push@^3.6.4",
         "npm:airtable@~0.12.1",
         "npm:bootstrap@^5.2.3",
         "npm:googleapis@140",
@@ -47,6 +48,7 @@
         "npm:rxjs@7.8",
         "npm:tslib@^2.3.0",
         "npm:typescript@~5.1.3",
+        "npm:web-push@^3.6.7",
         "npm:zone.js@0.13"
       ]
     }
