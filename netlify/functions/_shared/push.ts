@@ -51,6 +51,18 @@ async function loadSubscriptions(): Promise<PushSub[]> {
 		.filter(Boolean) as PushSub[];
 }
 
+function vapidDebugMeta() {
+	const publicUsed = VAPID_PUBLIC_KEY || DEFAULT_PUBLIC;
+	return {
+		hasEnvPublic: Boolean(VAPID_PUBLIC_KEY),
+		hasEnvPrivate: Boolean(VAPID_PRIVATE_KEY),
+		publicPrefix: String(publicUsed).slice(0, 12),
+		publicLen: String(publicUsed).length,
+		privateLen: VAPID_PRIVATE_KEY ? String(VAPID_PRIVATE_KEY).length : 0,
+		usedDefaultPublic: !VAPID_PUBLIC_KEY,
+	};
+}
+
 function ensureVapid() {
 	if (!VAPID_PRIVATE_KEY) {
 		throw new Error('VAPID_PRIVATE_KEY non configurata');
@@ -74,16 +86,39 @@ async function sendToSubscriptions(subscriptions: PushSub[], title: string, body
 
 	let sent = 0;
 	const errors: string[] = [];
+	const vapidMeta = vapidDebugMeta();
 	for (const sub of subscriptions) {
+		let host = '';
+		try {
+			host = new URL(sub.endpoint).host;
+		} catch {
+			host = 'invalid-url';
+		}
 		try {
 			await webpush.sendNotification(sub, payload);
 			sent++;
+			// #region agent log
+			fetch('http://127.0.0.1:7426/ingest/c582076e-daa3-46f3-b028-fea869801e45',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'0484f6'},body:JSON.stringify({sessionId:'0484f6',hypothesisId:'D',location:'push.ts:sendToSubscriptions',message:'push send ok',data:{host,endpointLen:sub.endpoint.length,p256dhLen:sub.keys.p256dh.length,authLen:sub.keys.auth.length,vapidMeta},timestamp:Date.now()})}).catch(()=>{});
+			// #endregion
 		} catch (err: any) {
-			errors.push(err?.message || String(err));
+			const detail = {
+				message: err?.message || String(err),
+				statusCode: err?.statusCode ?? null,
+				body: String(err?.body || '').slice(0, 300),
+				host,
+				endpointLen: sub.endpoint.length,
+				p256dhLen: sub.keys.p256dh.length,
+				authLen: sub.keys.auth.length,
+				vapidMeta,
+			};
+			errors.push(JSON.stringify(detail));
+			// #region agent log
+			fetch('http://127.0.0.1:7426/ingest/c582076e-daa3-46f3-b028-fea869801e45',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'0484f6'},body:JSON.stringify({sessionId:'0484f6',hypothesisId:'A,B,C,E',location:'push.ts:sendToSubscriptions',message:'push send failed',data:detail,timestamp:Date.now()})}).catch(()=>{});
+			// #endregion
 		}
 	}
 
-	return { sent, total: subscriptions.length, errors };
+	return { sent, total: subscriptions.length, errors, vapidMeta };
 }
 
 export async function sendPushToAll(title: string, body: string) {
